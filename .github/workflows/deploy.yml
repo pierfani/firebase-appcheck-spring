@@ -1,0 +1,22 @@
+name: Publish package to GitHub Packages
+on:
+  release:
+    types: [created]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set release version
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+      - name: Publish package
+        run: mvn --batch-mode deploy --file pom.xml -Drevision=${{ env.RELEASE_VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
