@@ -73,9 +73,10 @@ public class FirebaseAppCheckAspect {
             throw new FirebaseAppCheckException("Token is null");
         }
 
-        initializeProvider();
+
 
         try {
+            initializeProvider();
             DecodedJWT jwt = JWT.decode(token);
             RSAPublicKey publicKey = (RSAPublicKey) provider.get(jwt.getKeyId()).getPublicKey();
 
