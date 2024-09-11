@@ -1,5 +1,7 @@
 package it.pierfani.firebaseappcheck;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.interfaces.RSAPublicKey;
 import java.time.Instant;
 import java.util.concurrent.TimeUnit;
@@ -21,7 +23,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 
 import jakarta.servlet.http.HttpServletRequest;
-
 @Aspect
 @Component
 public class FirebaseAppCheckAspect {
@@ -32,12 +33,13 @@ public class FirebaseAppCheckAspect {
     private String firebaseProjectNumber;
 
     @Value("${it.pierfani.firebaseappcheck.jwks-url}")
-    private String firebaseJwksUrl;
+    private String firebaseJwksUrlString;
 
     private JwkProvider provider;
 
-    private void initializeProvider() {
+    private void initializeProvider() throws MalformedURLException {
         if (provider == null) {
+            URL firebaseJwksUrl = new URL(firebaseJwksUrlString);
             provider = new JwkProviderBuilder(firebaseJwksUrl)
                     .cached(10, 4, TimeUnit.HOURS)
                     .rateLimited(20, 1, TimeUnit.MINUTES)
