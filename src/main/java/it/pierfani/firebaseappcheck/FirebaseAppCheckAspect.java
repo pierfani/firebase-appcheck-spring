@@ -10,7 +10,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -24,6 +23,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 
 import jakarta.servlet.http.HttpServletRequest;
+
 @Aspect
 @Component
 public class FirebaseAppCheckAspect {
@@ -35,6 +35,9 @@ public class FirebaseAppCheckAspect {
 
     @Value("${it.pierfani.firebaseappcheck.jwks-url}")
     private String firebaseJwksUrlString;
+
+    @Value("${it.pierfani.firebaseappcheck.enabled}")
+    private boolean firebaseAppCheckEnabled;
 
     private JwkProvider provider;
 
@@ -49,8 +52,11 @@ public class FirebaseAppCheckAspect {
     }
 
     @Around("@annotation(it.pierfani.firebaseappcheck.FirebaseAppCheck)")
-    @ConditionalOnExpression("${it.pierfani.firebaseappcheck.enabled}")
     public Object checkFirebaseAppCheck(ProceedingJoinPoint joinPoint) throws Throwable {
+        if (!firebaseAppCheckEnabled) {
+            return joinPoint.proceed();
+        }
+
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
                 .getRequest();
         String appCheckToken = request.getHeader(FIREBASE_APP_CHECK_HEADER);

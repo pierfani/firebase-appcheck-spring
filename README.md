@@ -33,7 +33,7 @@ Per utilizzare questa libreria nel tuo progetto, aggiungi le seguenti configuraz
 <dependency>
     <groupId>it.pierfani</groupId>
     <artifactId>firebase-appcheck-spring-boot-starter</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 
@@ -110,7 +110,7 @@ To use this library in your project, add the following configurations to your `p
 <dependency>
     <groupId>it.pierfani</groupId>
     <artifactId>firebase-appcheck-spring-boot-starter</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 
