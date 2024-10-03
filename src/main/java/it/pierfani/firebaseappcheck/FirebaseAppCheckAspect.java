@@ -10,6 +10,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -48,6 +49,7 @@ public class FirebaseAppCheckAspect {
     }
 
     @Around("@annotation(it.pierfani.firebaseappcheck.FirebaseAppCheck)")
+    @ConditionalOnExpression("${it.pierfani.firebaseappcheck.enabled}")
     public Object checkFirebaseAppCheck(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
                 .getRequest();
@@ -72,8 +74,6 @@ public class FirebaseAppCheckAspect {
         if (token == null) {
             throw new FirebaseAppCheckException("Token is null");
         }
-
-
 
         try {
             initializeProvider();

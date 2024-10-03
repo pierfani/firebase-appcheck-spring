@@ -33,7 +33,7 @@ Per utilizzare questa libreria nel tuo progetto, aggiungi le seguenti configuraz
 <dependency>
     <groupId>it.pierfani</groupId>
     <artifactId>firebase-appcheck-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
@@ -44,6 +44,7 @@ Aggiungi le seguenti proprietà al tuo `application.properties` o `application.y
 ```properties
 it.pierfani.firebaseappcheck.project-number=YOUR_FIREBASE_PROJECT_NUMBER
 it.pierfani.firebaseappcheck.jwks-url=https://firebaseappcheck.googleapis.com/v1/jwks
+it.pierfani.firebaseappcheck.enabled=true
 ```
 
 ### Utilizzo
@@ -109,7 +110,7 @@ To use this library in your project, add the following configurations to your `p
 <dependency>
     <groupId>it.pierfani</groupId>
     <artifactId>firebase-appcheck-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
@@ -120,6 +121,7 @@ Add the following properties to your `application.properties` or `application.ym
 ```properties
 it.pierfani.firebaseappcheck.project-number=YOUR_FIREBASE_PROJECT_NUMBER
 it.pierfani.firebaseappcheck.jwks-url=https://firebaseappcheck.googleapis.com/v1/jwks
+it.pierfani.firebaseappcheck.enabled=true
 ```
 
 ### Usage
